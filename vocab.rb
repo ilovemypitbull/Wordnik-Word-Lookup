@@ -19,49 +19,64 @@ while i < my_word_def.length
    i += 1
 end
 
-counter = 1
+if word_definitions.length > 0
+  
+  counter = 1
 
-for i in word_definitions
-  puts counter.to_s + ": " + i
-  counter += 1
+  for i in word_definitions
+    puts counter.to_s + ": " + i
+    counter += 1
+  end
+
+  puts "What definition do you want to save?"
+  definition_number = gets.chomp
+
+  definition_number = definition_number.to_i - 1
+
+  open('vocab.txt', 'a') {|f|
+    f.puts "\n" + word_input + "\n" + "Definition: " + word_definitions[definition_number] 
+  }
+  
+else
+  puts "That word doesn't have a definition."
 end
 
-puts "What definition do you want to save?"
-definition_number = gets.chomp
-
-definition_number = definition_number.to_i - 1
-
-open('vocab.txt', 'a') {|f|
-  f.puts "\n" + word_input + "\n" + "Definition: " + word_definitions[definition_number] 
-}
 
 puts "Would you like examples? (y/n)"
 want_examples = gets.chomp
 
-my_word_ex = my_word.examples
+if want_examples == "y"
+  my_word_ex = my_word.examples
 
-i = 0
+  i = 0
 
-word_examples = Array.new
+  word_examples = Array.new
 
-while i < my_word_ex.length
-   word_examples.push(my_word_ex[i].display)
-   i += 1
+  while i < my_word_ex.length
+     word_examples.push(my_word_ex[i].display)
+     i += 1
+  end
+
+  if word_examples.length > 0
+    counter = 1
+
+    for i in word_examples
+      puts counter.to_s + ": " + i
+      counter += 1
+    end
+
+    puts "What example do you want to save?"
+    example_number = gets.chomp
+
+    example_number = example_number.to_i - 1
+
+
+    open('vocab.txt', 'a') {|f|
+      f.puts "Example: " + word_examples[example_number] 
+    }
+  else
+    puts "That word doesn't have an example."
+  end
 end
 
-counter = 1
 
-for i in word_examples
-  puts counter.to_s + ": " + i
-  counter += 1
-end
-
-puts "What example do you want to save?"
-example_number = gets.chomp
-
-example_number = example_number.to_i - 1
-
-
-open('vocab.txt', 'a') {|f|
-  f.puts "Example: " + word_examples[example_number] 
-}
